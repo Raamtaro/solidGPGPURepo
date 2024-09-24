@@ -2,8 +2,8 @@ import restart from 'vite-plugin-restart'
 import glsl from 'vite-plugin-glsl'
 
 export default {
-    root: './',
-    publicDir: '../../static/',
+    root: 'src/',
+    publicDir: '../static',
     base: './',
     server:
     {

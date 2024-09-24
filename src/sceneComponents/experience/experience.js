@@ -1,11 +1,12 @@
 import * as THREE from 'three'
-import Sizes from './utils/sizes.js'
-import Cursor from './utils/cursor.js'
-import Resources from './utils/Resources.js'
+import Sizes from '../../utils/sizes.js'
+import Cursor from '../../utils/cursor.js'
+import Resources from '../../utils/Resources.js'
+
 
 class Experience {
 
-    constructor(object, canvas) {
+    constructor(sources, canvas) {
 
         window.experience = this
         this.canvas = canvas
@@ -16,7 +17,7 @@ class Experience {
         
 
         this.scene = new THREE.Scene()
-        this.resources = new Resources(this)
+        this.resources = new Resources(sources)
 
         this.cameraGroup = new THREE.Group()
         this.camera = new THREE.PerspectiveCamera(35, this.sizes.width/this.sizes.height, 0.1, 100)

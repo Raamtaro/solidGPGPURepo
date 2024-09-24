@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import Experience from './experience.js'
+import Experience from './sceneComponents/experience/experience.js'
 import Stats from 'stats.js'
-
+import sources from './sources.js'
 
 /**
  * Driver Script
@@ -25,7 +25,7 @@ document.body.appendChild(stats.dom)
 class Sketch {
     constructor() {
 
-        this.experience = new Experience([], document.querySelector('canvas.webgl'))
+        this.experience = new Experience(sources, document.querySelector('canvas.webgl'))
         this.clock = new THREE.Clock()
         this.previousTime = 0
         this.tick()
