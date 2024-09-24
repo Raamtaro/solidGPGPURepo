@@ -3,4 +3,4 @@ import Lenis from 'lenis'
 import Sketch from './app.js'
 
 
-new Sketch()
+const elfo = new Sketch()

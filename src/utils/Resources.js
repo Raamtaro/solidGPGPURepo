@@ -3,7 +3,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 import * as THREE from 'three'
 import EventEmitter from './eventEmitter.js'
 
-class Resources extends EventEmitter {
+class Resources extends EventEmitter { //For now this will just be a GLTF Loader, edit it to work in texture loading 
     constructor(sources) {
         super()
         this.sources = sources
@@ -26,22 +26,55 @@ class Resources extends EventEmitter {
         this.loaders.gltfLoader = new GLTFLoader()
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
         
-        // this.loaders.textureLoader = new THREE.TextureLoader()
+        this.loaders.textureLoader = new THREE.TextureLoader()
     }
 
-    async startLoading() {
-        console.log('attempting to load glb...')
+    async startLoading () {
+        const loadPromises = this.sources.map((source) => this.loadResource(source))
+
+        await Promise.all(loadPromises)
+
+        if (this.loaded === this.toLoad) {
+            this.trigger('ready')
+        }
+
+    }
+
+    async loadResource (source) {
+        let loader;
+        let file;
+
+        console.log('Intialising loader...')
+
+        switch(source.type) {
+            case 'gltfModel':
+                loader = this.loaders.gltfLoader
+                break
+
+            case 'texture':
+                loader = this.loaders.textureLoader
+                break
+            
+            default:
+                console.warn(`unknown resource type: ${sources.type}`)
+        }
+
+        console.log('loading resource...')
+
         try {
-            const gltf = await this.loaders.gltfLoader.loadAsync(this.sources[0].path)
-            this.loaded++
-            console.log(gltf)
+            file = await loader.loadAsync(source.path)
+            this.sourceLoaded(source, file)
         } catch (error) {
-            console.error(`Couldn't load ${this.sources[0].name}: ${error}`)
-            console.log(this.sources)
-        } finally {
+            console.error(`Error loading ${source.name}:`, error)
+        }  finally {
             console.log('done')
         }
-    } 
+    }
+
+    sourceLoaded (source, file) {
+        this.items[source.name] = file
+        this.loaded++
+    }
     
 }
 
