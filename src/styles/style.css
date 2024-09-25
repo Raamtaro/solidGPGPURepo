@@ -6,9 +6,9 @@
 }
 
 html, body{
-    min-height: 100%;
-    background: linear-gradient(90deg, #620d2f 0%, #4b0014 50%, rgb(0, 0, 0));
-    background: linear-gradient(135deg, #0c0110 0%, #1E154A 45%, #00768b 100%);
+    height: 100%;
+    
+    background: linear-gradient(135deg, #5A4E48 0%, #8C756A 50%, #C6B8B1 100%);;
 
     
 }

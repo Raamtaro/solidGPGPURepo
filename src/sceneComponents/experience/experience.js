@@ -37,9 +37,9 @@ class Experience {
         this.cursor = new Cursor()
 
         this.resources.on('ready', () => {
-            /**
-             * SCENE ONE PARTICLES
-             */
+            // /**
+            //  * SCENE ONE PARTICLES
+            //  */
 
             this.lotusParticles = new LotusParticles()
 

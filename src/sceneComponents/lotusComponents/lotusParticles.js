@@ -16,11 +16,8 @@ class LotusParticles {
         this.resource = this.resources.items.lotusModel
         this.setGeometry()
 
-        //Setup some attributes
-        this.count = this.geometry.attributes.position.count
-
         //Set up GPGPU
-        this.gpgpu = new GpgpuComputation() //This should be doing all the heavy lifting on the GPGPU side of the sim, and so there shouldn't be much more to do aside from initiating it
+        this.gpgpu = new GpgpuComputation(this.geometry) //This should be doing all the heavy lifting on the GPGPU side of the sim, and so there shouldn't be much more to do aside from initiating it
 
         //Set up Particles
     }
@@ -29,8 +26,9 @@ class LotusParticles {
         this.resource.scene.traverse((child) => {
             if (child.isMesh) {
                 this.geometry = child.geometry
+                console.log(this.geometry)
                 return
-                // console.log(this.geometry) //Debug  
+                
             }
         })
     }

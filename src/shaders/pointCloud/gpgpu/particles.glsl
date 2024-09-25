@@ -4,8 +4,8 @@ uniform sampler2D uBase;
 uniform float uFlowFieldInfluence;
 uniform float uFlowFieldStrength;
 uniform float uFlowFieldFrequency;
-uniform vec3 uRepulsion;
-uniform float uBounds;
+// uniform vec3 uRepulsion;
+// uniform float uBounds;
 
 #include ../includes/simplexNoise4d.glsl
 

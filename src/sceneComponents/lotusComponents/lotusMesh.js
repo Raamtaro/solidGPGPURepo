@@ -27,9 +27,9 @@ class LotusMesh {
         this.uniforms = { 
             uColor: new THREE.Uniform(new THREE.Color(this.materialParams.color)),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
-            uShadowRepetitions: new THREE.Uniform(256),
+            uShadowRepetitions: new THREE.Uniform(512),
             uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
-            uLightRepetitions: new THREE.Uniform(256),
+            uLightRepetitions: new THREE.Uniform(512),
             uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor))
         }
 
@@ -64,12 +64,14 @@ class LotusMesh {
     }
 
     handleResize() {
-
+        this.instance.material.uniforms.uResolution.value.set(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)
     }
 
     update() {
         const elapsedTime = this.time.elapsed / 1000
+        this.instance.rotation.x = elapsedTime * 0.2
         this.instance.rotation.y = elapsedTime * 0.12
+        this.instance.rotation.z = - elapsedTime * 0.12
         
         
     }
