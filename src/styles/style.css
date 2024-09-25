@@ -4,11 +4,20 @@
 
    
 }
+
+html, body{
+    min-height: 100%;
+    background: linear-gradient(90deg, #620d2f 0%, #4b0014 50%, rgb(0, 0, 0));
+    background: linear-gradient(135deg, #0c0110 0%, #1E154A 45%, #00768b 100%);
+
+    
+}
 .webgl
 {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
-    z-index: 1;
+   
 }
+
