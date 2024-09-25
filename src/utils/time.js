@@ -1,5 +1,10 @@
 import EventEmitter from "./eventEmitter.js";
+import Stats from "stats.js";
 import * as THREE from 'three'
+
+const stats = new Stats()
+stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom)
 
 class Time extends EventEmitter {
     constructor() {
@@ -11,28 +16,37 @@ class Time extends EventEmitter {
         this.elapsed = 0
         this.delta = 16
 
+        this.tick = this.tick.bind(this)
+
+        requestAnimationFrame(this.tick)
+
         
-        window.requestAnimationFrame(() =>
-            {
-                this.tick()
-            }
+        // window.requestAnimationFrame(() =>
+        //     {
+        //         this.tick()
+        //     }
         
         
-        )
+        // )
     }
 
-    tick() {
+    tick() { 
+        stats.begin()
         const currentTime = Date.now()
         this.delta = currentTime - this.current
         this.current = currentTime
         this.elapsed = this.current - this.start
-        console.log('tick')
+        // console.log(this.delta / 1000) //helps convert from ms to s
 
-        window.requestAnimationFrame(() =>
-            {
-                this.tick()
-            }
-        )
+        this.trigger('tick')
+
+        // window.requestAnimationFrame(() =>
+        //     {
+        //         this.tick()
+        //     }
+        // )
+        requestAnimationFrame(this.tick)
+        stats.end()
     }
 }
 

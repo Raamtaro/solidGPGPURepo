@@ -3,4 +3,4 @@ import Lenis from 'lenis'
 import Sketch from './app.js'
 
 
-const elfo = new Sketch()
+const webGLInstance = new Sketch()

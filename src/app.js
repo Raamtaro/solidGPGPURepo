@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import Experience from './sceneComponents/experience/experience.js'
-import Stats from 'stats.js'
 import sources from './sources.js'
 
 /**
@@ -18,78 +17,80 @@ import sources from './sources.js'
 /**
  * Stats fps meter
  */
-const stats = new Stats()
-stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stats.dom)
+// const stats = new Stats()
+// stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
+// document.body.appendChild(stats.dom)
 
 class Sketch {
     constructor() {
 
         this.experience = new Experience(sources, document.querySelector('canvas.webgl'))
-        this.clock = new THREE.Clock()
-        this.previousTime = 0
-        this.tick()
+        // this.clock = new THREE.Clock()
+        // this.previousTime = 0
+        // this.tick()
 
         console.log(this.experience)
     }
 
 
 
-    tick() {
+    // tick() {
 
-        //Start Stats
-        stats.begin()
+    //     //Start Stats
+    //     stats.begin()
 
-        /**
-         * Time mgmt
-         */
-        this.elapsedTime = this.clock.getElapsedTime()
-        this.deltaTime = this.elapsedTime - this.previousTime
-        this.previousTime = this.elapsedTime
+    //     /**
+    //      * Time mgmt
+    //      */
+    //     this.elapsedTime = this.clock.getElapsedTime()
+    //     this.deltaTime = this.elapsedTime - this.previousTime
+    //     this.previousTime = this.elapsedTime
 
-        /**
-         * Cursor Stuff
-         */
+    //     // console.log(this.deltaTime) //Values ~ 0.008
 
-        //Parallax 
+    //     /**
+    //      * Cursor Stuff
+    //      */
 
-        //Velocity Calculation
-        this.experience.cursor.calculateSpeed()
+    //     //Parallax 
 
-        const parallaxCoords = this.experience.cursor.parallaxCoords;
-        const parallaxX = parallaxCoords.x * 0.3
-        const parallaxY = - parallaxCoords.y * 0.3
+    //     //Velocity Calculation
+    //     this.experience.cursor.calculateSpeed()
 
-        this.experience.cameraGroup.position.x += (parallaxX - this.experience.cameraGroup.position.x) * 5 * this.deltaTime
-        this.experience.cameraGroup.position.y += (parallaxY - this.experience.cameraGroup.position.y) * 5 * this.deltaTime
+    //     const parallaxCoords = this.experience.cursor.parallaxCoords;
+    //     const parallaxX = parallaxCoords.x * 0.3
+    //     const parallaxY = - parallaxCoords.y * 0.3
 
-        /**
-         * Point Cloud Scene FX
-         */
+    //     this.experience.cameraGroup.position.x += (parallaxX - this.experience.cameraGroup.position.x) * 5 * this.deltaTime
+    //     this.experience.cameraGroup.position.y += (parallaxY - this.experience.cameraGroup.position.y) * 5 * this.deltaTime
 
-        //Model Rotation
+    //     /**
+    //      * Point Cloud Scene FX
+    //      */
 
-        //GPGPU Update
+    //     //Model Rotation
 
-
-
-        /**
-         * Post Processing
-         */
+    //     //GPGPU Update
 
 
 
+    //     /**
+    //      * Post Processing
+    //      */
 
 
-        //Render Normal Scene
-        this.experience.renderer.render(this.experience.scene, this.experience.camera)
 
-        //Call tick again on the next frame
-        requestAnimationFrame(this.tick.bind(this))
 
-        //Kill Stats
-        stats.end()
-    }
+
+    //     //Render Normal Scene
+    //     this.experience.renderer.render(this.experience.scene, this.experience.camera)
+
+    //     //Call tick again on the next frame
+    //     requestAnimationFrame(this.tick.bind(this))
+
+    //     //Kill Stats
+    //     stats.end()
+    // }
 }
 
 export default Sketch

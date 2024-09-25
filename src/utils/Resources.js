@@ -74,6 +74,7 @@ class Resources extends EventEmitter { //For now this will just be a GLTF Loader
     sourceLoaded (source, file) {
         this.items[source.name] = file
         this.loaded++
+        console.log(file)
     }
     
 }
