@@ -20,14 +20,6 @@ class Time extends EventEmitter {
 
         requestAnimationFrame(this.tick)
 
-        
-        // window.requestAnimationFrame(() =>
-        //     {
-        //         this.tick()
-        //     }
-        
-        
-        // )
     }
 
     tick() { 
@@ -40,11 +32,7 @@ class Time extends EventEmitter {
 
         this.trigger('tick')
 
-        // window.requestAnimationFrame(() =>
-        //     {
-        //         this.tick()
-        //     }
-        // )
+
         requestAnimationFrame(this.tick)
         stats.end()
     }

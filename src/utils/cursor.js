@@ -10,7 +10,7 @@ class Cursor extends EventEmitter {
 
         // console.log(this.experience)
         this.cameraGroup = this.experience.camera.cameraGroup
-        this.deltaTime = this.experience.time.delta
+        this.deltaTime = this.experience.time.delta / 1000
 
         this.parallaxCoords = {x: 0, y: 0}
         this.mouse = new THREE.Vector2()
