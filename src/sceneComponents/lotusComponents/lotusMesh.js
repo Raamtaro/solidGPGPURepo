@@ -69,8 +69,8 @@ class LotusMesh {
 
     update() {
         const elapsedTime = this.time.elapsed / 1000
-        this.instance.rotation.y = -elapsedTime * 0.1
-        this.instance.rotation.x = -elapsedTime * 0.01
+        this.instance.rotation.y = elapsedTime * 0.12
+        
         
     }
 }

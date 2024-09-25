@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Stats from 'stats.js'
+
 import Sizes from '../../utils/sizes.js'
 import Cursor from '../../utils/cursor.js'
 import Resources from '../../utils/Resources.js'
@@ -41,15 +41,12 @@ class Experience {
              * SCENE ONE PARTICLES
              */
 
-            // this.lotusParticles = new LotusParticles()
-            
+            this.lotusParticles = new LotusParticles()
 
-
-
-            /**
-             * SCENE TWO
-             */
-            this.LotusMesh = new LotusMesh()
+            // /**
+            //  * SCENE TWO
+            //  */
+            // this.LotusMesh = new LotusMesh()
         })
 
 
