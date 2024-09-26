@@ -44,7 +44,8 @@ void main()
 
     // Varyings
 
-    float strength = floor(aParticlesUv.x * 256.0) / 256.0 * floor(aParticlesUv.y * 256.0) / 256.0;
+    // float strength = floor(aParticlesUv.x * 10.0) / 10.0 * floor(aParticlesUv.y * 10.0) / 10.0;
+    float strength = 1.0 - distance(aParticlesUv, vec2(0.5));
     vUv = uv;
     vColor = mix(uColor, uLightColor, strength);
     vNormal = modelNormal;

@@ -32,15 +32,23 @@ class LotusMesh {
             uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
             uLightRepetitions: new THREE.Uniform(512),
             uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor)),
-            uMouse: new THREE.Uniform(new THREE.Vector2())
+            uMouse: new THREE.Uniform(new THREE.Vector2()),
+            uAlpha: new THREE.Uniform(0.0)
         }
 
         this.shaderMaterial = new THREE.ShaderMaterial(
             {
 
                 uniforms: this.uniforms,
+
                 vertexShader: halftoneVertex,
-                fragmentShader: halftoneFragment
+                fragmentShader: halftoneFragment,
+
+                // transparent: true,
+                blending: THREE.NormalBlending,
+
+                // depthTest: true,
+                // depthWrite: false
 
             }
         )
@@ -57,6 +65,7 @@ class LotusMesh {
             if (child.isMesh) {
                 this.instance = child
                 this.instance.material = this.shaderMaterial
+                this.instance.renderOrder = 0
 
                 this.scene.add(this.instance)
                 

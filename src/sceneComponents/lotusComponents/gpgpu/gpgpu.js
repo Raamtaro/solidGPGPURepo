@@ -21,6 +21,8 @@ class GpgpuComputation {
 
         this.baseGeometry = baseGeometry
         this.count = this.baseGeometry.attributes.position.count
+
+        console.log(this.count)
         this.positionArray = this.baseGeometry.attributes.position.array
         this.size = Math.ceil(Math.sqrt(this.count))
         this.instance = new GPUComputationRenderer(this.size, this.size, this.renderer.instance)
@@ -33,7 +35,7 @@ class GpgpuComputation {
         this.particlesVariable = this.instance.addVariable('uParticles', gpgpuShader, this.baseParticlesTexture)
         this.configParticlesVariable()
         
-        console.log(this.renderer)
+        // console.log(this.renderer)
         console.log('GPGPU attempting init')
         
 
@@ -68,7 +70,7 @@ class GpgpuComputation {
             this.baseParticlesTexture.image.data[i4 + 3] = Math.random()
         }
 
-        console.log(this.baseParticlesTexture.image.data) //Debug log statement
+        // console.log(this.baseParticlesTexture.image.data) //Debug log statement
     }
 
     configParticlesVariable() {

@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+// import { SubdivisionModifier } from 'three/examples/jsm/modifiers/SubdivisionModifier.js';
 
 //Shaders
 import particlesVertexShader from '../../shaders/pointCloud/particles/vertex.glsl'
@@ -6,6 +7,7 @@ import particlesFragmentShader from '../../shaders/pointCloud/particles/fragment
 
 import Experience from '../experience/experience.js'
 import GpgpuComputation from './gpgpu/gpgpu.js'
+
 
 class LotusParticles {
     constructor() {
@@ -18,6 +20,7 @@ class LotusParticles {
         this.resources = this.experience.resources
         this.resource = this.resources.items.lotusModel
         this.setGeometry()
+        // this.subdivideGeometry()
 
         this.count = this.geometry.attributes.position.count
 
@@ -41,7 +44,7 @@ class LotusParticles {
         }
 
         this.uniforms = {
-            uSize: new THREE.Uniform(0.07699),
+            uSize: new THREE.Uniform(0.03699),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
             uParticlesTexture: new THREE.Uniform(),
             uColor: new THREE.Uniform(new THREE.Color(this.materialParams.color)),
@@ -49,12 +52,17 @@ class LotusParticles {
             uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
             uLightRepetitions: new THREE.Uniform(512),
             uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor)),
-            uMouse: new THREE.Uniform(new THREE.Vector2())
+            uMouse: new THREE.Uniform(new THREE.Vector2()),
+            uAlpha: new THREE.Uniform(0.0)
         }
         this.shaderMaterial = new THREE.ShaderMaterial(
             {
                 vertexShader: particlesVertexShader,
                 fragmentShader: particlesFragmentShader,
+                transparent: true,
+                blending: THREE.NormalBlending,
+                depthTest: true,
+                // depthWrite: false,
                 uniforms: this.uniforms
             }
         )
@@ -69,12 +77,19 @@ class LotusParticles {
         this.resource.scene.traverse((child) => {
             if (child.isMesh) {
                 this.geometry = child.geometry
-                console.log(this.geometry)
+                // console.log(this.geometry)
                 return
                 
             }
         })
     }
+
+    // subdivideGeometry() {
+    //     const geometry = this.geometry.clone();
+    //     const modifier = new SubdivisionModifier(1);
+
+    //     const smoothedGeometry = modifier.modify(geometry)
+    // }
 
     populateArrays() {
         for (let y = 0; y < this.size; y++) {
@@ -102,6 +117,8 @@ class LotusParticles {
 
         this.points = new THREE.Points(this.bufferGeometry, this.shaderMaterial)
         this.points.frustumCulled = false
+
+        this.points.renderOrder = 1
         this.scene.add(this.points)
 
     }

@@ -13,10 +13,10 @@
     "vite-plugin-restart": "^0.4.1"
   },
   "dependencies": {
-    "codesandbox": "^2.2.3",
     "lenis": "^1.1.13",
     "lil-gui": "^0.19.2",
     "stats.js": "^0.17.0",
-    "three": "^0.166.1"
+    "three": "^0.166.1",
+    "three-subdivision-modifier": "^1.0.5"
   }
 }
