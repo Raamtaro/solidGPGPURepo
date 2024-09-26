@@ -27,8 +27,6 @@ class Experience {
         this.sizes = new Sizes()
         this.time = new Time()
 
-
-
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
 
@@ -44,12 +42,10 @@ class Experience {
             this.lotusParticles = new LotusParticles()
 
             // /**
-            //  * SCENE TWO
+            //  * SCENE TWO --- Kind of works as a Hello World 
             //  */
-            // this.LotusMesh = new LotusMesh()
+            this.LotusMesh = new LotusMesh()
         })
-
-
 
         this.time.on('tick', this.renderScene.bind(this))
     }

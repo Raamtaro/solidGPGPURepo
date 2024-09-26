@@ -4,6 +4,8 @@ uniform sampler2D uBase;
 uniform float uFlowFieldInfluence;
 uniform float uFlowFieldStrength;
 uniform float uFlowFieldFrequency;
+uniform vec2 uMouse;
+uniform float uVelocity;
 // uniform vec3 uRepulsion;
 // uniform float uBounds;
 
@@ -17,7 +19,7 @@ void main() {
     vec4 particle = texture(uParticles, uv);
     vec4 base = texture(uBase, uv);
 
-    // // Attempt at implementing cursor interaction. So far not so great
+    // // Attempt at implementing cursor interaction. This did not help me achieve the effect I wanted - heavily distorted the particles
     // float f; 
 
     // float dist;
@@ -48,9 +50,12 @@ void main() {
     //Alive Particle
     else {
         //Strength
+        float distFromParticle = distance(vec3(uMouse, 0.0), particle.xyz) * 5.0;
         float strength = simplexNoise4d(vec4(base.xyz * 0.2, time + 1.0));
-        float influence = (uFlowFieldInfluence - 0.5) * (- 2.0);
+        float influence = (uFlowFieldInfluence + uVelocity*10.0 - 0.5) * (- 2.0);
         strength = smoothstep(influence, 1.0, strength);
+        
+        
 
         // //Cursor Effect
         // if (dist < repelRadius) {
@@ -60,15 +65,18 @@ void main() {
         
         //Flow Field
         vec3 flowField = vec3(
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + 0.0, time)),
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + 1.0, time)),
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + 2.0, time))
+            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0, time)),
+            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity), time)),
+            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency  +  2.0, time))
         );
 
 
         // repulsionDirection = normalize(repulsionDirection);
         flowField = normalize(flowField);
-        particle.xyz += flowField * uDeltaTime * strength * uFlowFieldStrength;
+        
+        particle.xyz += flowField * uDeltaTime * ((strength * strength + uVelocity*10.0)/strength) * ((uFlowFieldStrength * uFlowFieldStrength + uVelocity* distFromParticle)/uFlowFieldStrength);
+        
+        
         
         
         particle.a += uDeltaTime * 0.3;
