@@ -1,12 +1,20 @@
 uniform vec2 uResolution;
 uniform float uSize;
 uniform sampler2D uParticlesTexture;
+uniform vec3 uColor;
+uniform vec3 uLightColor;
+uniform vec2 uMouse;
+
 
 attribute vec2 aParticlesUv;
 attribute float aSize;
 
 varying vec3 vColor;
 varying vec2 vUv;
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+
 
 void main()
 {
@@ -17,7 +25,8 @@ void main()
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
 
-
+    //Model Normal
+    vec3 modelNormal = (modelMatrix * vec4(normal, 0.0)).xyz;
 
 
     
@@ -30,15 +39,22 @@ void main()
     float sizeOut = smoothstep(0.7, 1.0, particle.a);
     float size = min(sizeIn, sizeOut);
 
-    gl_PointSize = uSize * uResolution.y;
+    gl_PointSize = aSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     // Varyings
-    vUv = uv;
-    // vColor = vec3(aParticlesUv, 0.0); //RGB Hello world Scheme
-    // vColor = vec3(vUv, 0.0); //Black
 
-    vec3 blackColor = vec3(vUv, 0.0);
+    float strength = floor(aParticlesUv.x * 256.0) / 256.0 * floor(aParticlesUv.y * 256.0) / 256.0;
+    vUv = uv;
+    vColor = mix(uColor, uLightColor, strength);
+    vNormal = modelNormal;
+    vPosition = modelPosition.xyz;
+
+
+    //HalfTone Calculation
+
+
+
 
 
 

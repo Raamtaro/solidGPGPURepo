@@ -9,6 +9,7 @@ class LotusMesh {
 
         this.scene = this.experience.scene
         this.time = this.experience.time
+        this.cursor = this.experience.cursor
         
         
 
@@ -30,7 +31,8 @@ class LotusMesh {
             uShadowRepetitions: new THREE.Uniform(512),
             uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
             uLightRepetitions: new THREE.Uniform(512),
-            uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor))
+            uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor)),
+            uMouse: new THREE.Uniform(new THREE.Vector2())
         }
 
         this.shaderMaterial = new THREE.ShaderMaterial(
@@ -57,6 +59,7 @@ class LotusMesh {
                 this.instance.material = this.shaderMaterial
 
                 this.scene.add(this.instance)
+                
                 // console.log(this.instance)
                 
             }
@@ -72,6 +75,7 @@ class LotusMesh {
         // this.instance.rotation.x = elapsedTime * 0.2
         this.instance.rotation.y = elapsedTime * 0.12
         // this.instance.rotation.z = - elapsedTime * 0.12
+        this.instance.material.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
         
         
     }

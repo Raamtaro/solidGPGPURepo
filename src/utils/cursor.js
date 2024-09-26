@@ -7,6 +7,7 @@ class Cursor extends EventEmitter {
         super()
 
         this.experience = new Experience()
+        this.sizes = this.experience.sizes
 
         // console.log(this.experience)
         this.cameraGroup = this.experience.camera.cameraGroup
@@ -16,6 +17,9 @@ class Cursor extends EventEmitter {
         this.mouse = new THREE.Vector2()
         this.followMouse = new THREE.Vector2()
         this.previousMouse = new THREE.Vector2()
+        this.ndcMouse = new THREE.Vector2()
+        this.ndcFollowMouse = new THREE.Vector2()
+        this.ndcPreviousMouse = new THREE.Vector2()
         this.ease = 0.075
 
         this.velocity = 0
@@ -26,11 +30,16 @@ class Cursor extends EventEmitter {
     }
 
     handleMouse(event) {
-        this.parallaxCoords.x = event.clientX / this.experience.sizes.width - 0.5
-        this.parallaxCoords.y = event.clientY / this.experience.sizes.height - 0.5
+        this.parallaxCoords.x = event.clientX / this.sizes.width - 0.5
+        this.parallaxCoords.y = event.clientY / this.sizes.height - 0.5
 
-        this.mouse.x = event.clientX / this.experience.sizes.width
-        this.mouse.y = 1.0 - (event.clientY / this.experience.sizes.height)
+        this.mouse.x = event.clientX / this.sizes.width
+        this.mouse.y = 1.0 - (event.clientY / this.sizes.height)
+
+        this.ndcMouse.x = (event.clientX / this.sizes.width) * 2 - 1;
+        this.ndcMouse.y = -(event.clientY / this.sizes.height) * 2 + 1;
+
+
         // console.log(this.parallaxCoords)
     }
 
@@ -46,11 +55,19 @@ class Cursor extends EventEmitter {
         this.followMouse.x -= this.ease * (this.followMouse.x - this.mouse.x)
         this.followMouse.y -= this.ease * (this.followMouse.y - this.mouse.y)
 
-        // console.log(this.followMouse)
+        //Normalised
+        this.ndcFollowMouse.x -= this.ease * (this.ndcFollowMouse.x - this.ndcMouse.x)
+        this.ndcFollowMouse.y -= this.ease * (this.ndcFollowMouse.y - this.ndcMouse.y)
 
         this.previousMouse.x = this.mouse.x
         this.previousMouse.y = this.mouse.y
+
+        this.ndcPreviousMouse.x = this.ndcMouse.x
+        this.ndcPreviousMouse.y = this.ndcMouse.y
+
+        // console.log(this.ndcFollowMouse)
     }
+
 
     determineParallax() {
         const parallaxCoords = this.parallaxCoords

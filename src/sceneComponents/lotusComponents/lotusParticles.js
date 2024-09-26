@@ -13,6 +13,7 @@ class LotusParticles {
         this.scene = this.experience.scene
         this.time = this.experience.time
         this.sizes = this.experience.sizes
+        this.cursor = this.experience.cursor
 
         this.resources = this.experience.resources
         this.resource = this.resources.items.lotusModel
@@ -29,10 +30,26 @@ class LotusParticles {
         this.populateArrays() 
 
         this.bufferGeometry = new THREE.BufferGeometry()
+
+        /**
+         * This is a sidequest, halftone params
+         */
+        this.materialParams = {
+            color: '#ff4d67',
+            shadowColor: '#e70896',
+            lightColor: '#31bfb5'
+        }
+
         this.uniforms = {
-            uSize: new THREE.Uniform(0.023099),
+            uSize: new THREE.Uniform(0.07699),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
-            uParticlesTexture: new THREE.Uniform()
+            uParticlesTexture: new THREE.Uniform(),
+            uColor: new THREE.Uniform(new THREE.Color(this.materialParams.color)),
+            uShadowRepetitions: new THREE.Uniform(512),
+            uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
+            uLightRepetitions: new THREE.Uniform(512),
+            uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor)),
+            uMouse: new THREE.Uniform(new THREE.Vector2())
         }
         this.shaderMaterial = new THREE.ShaderMaterial(
             {
@@ -99,6 +116,7 @@ class LotusParticles {
         this.points.rotateOnAxis(new THREE.Vector3(0, 1, 0), deltaTime*0.12)
         
         this.shaderMaterial.uniforms.uParticlesTexture.value = this.gpgpu.instance.getCurrentRenderTarget(this.gpgpu.particlesVariable).texture
+        this.shaderMaterial.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
     }
 }
 
