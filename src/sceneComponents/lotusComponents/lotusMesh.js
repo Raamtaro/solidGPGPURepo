@@ -44,8 +44,8 @@ class LotusMesh {
                 vertexShader: halftoneVertex,
                 fragmentShader: halftoneFragment,
 
-                // transparent: true,
-                blending: THREE.NormalBlending,
+                transparent: true,
+                // blending: THREE.AdditiveBlending,
 
                 // depthTest: true,
                 // depthWrite: false
@@ -65,7 +65,7 @@ class LotusMesh {
             if (child.isMesh) {
                 this.instance = child
                 this.instance.material = this.shaderMaterial
-                this.instance.renderOrder = 0
+                
 
                 this.scene.add(this.instance)
                 

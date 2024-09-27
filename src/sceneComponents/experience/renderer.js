@@ -21,7 +21,9 @@ class Renderer {
 
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
-        this.instance.setClearAlpha(0)
+
+        this.instance.setClearColor('#200000')
+        // this.instance.setClearAlpha(0)
         
     }
 

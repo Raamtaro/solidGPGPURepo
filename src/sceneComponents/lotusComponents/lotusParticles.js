@@ -59,9 +59,9 @@ class LotusParticles {
             {
                 vertexShader: particlesVertexShader,
                 fragmentShader: particlesFragmentShader,
-                transparent: true,
-                blending: THREE.NormalBlending,
-                depthTest: true,
+                // transparent: true,
+                // blending: THREE.AdditiveBlending,
+                // depthTest: true,
                 // depthWrite: false,
                 uniforms: this.uniforms
             }
@@ -118,7 +118,7 @@ class LotusParticles {
         this.points = new THREE.Points(this.bufferGeometry, this.shaderMaterial)
         this.points.frustumCulled = false
 
-        this.points.renderOrder = 1
+        this.points.renderOrder = 0
         this.scene.add(this.points)
 
     }
