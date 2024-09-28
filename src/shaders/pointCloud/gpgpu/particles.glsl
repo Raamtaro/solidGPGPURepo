@@ -158,7 +158,7 @@ void main() {
         //Strength
         float distFromParticle = distance(vec3(uMouse, 0.0), particle.xyz) * 5.0;
         float strength = simplexNoise4d(vec4(base.xyz * 0.2, time + 1.0));
-        float influence = (uFlowFieldInfluence + uVelocity*10.0 - 0.5) * (- 2.0);
+        float influence = (uFlowFieldInfluence + uVelocity*100.0 - 0.5) * (- 2.0);
         strength = smoothstep(influence, 1.0, strength);
         
         
@@ -179,12 +179,12 @@ void main() {
         // flowField += curl(flowField.x, flowField.y, flowField.z);
 
 
-        //Pure Curl Noise
-        // vec3 flowField = curl(
-        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
-        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,
-        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 2.0).z
-        // );
+    //    // Pure Curl Noise
+    //     vec3 flowField = curl(
+    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
+    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,
+    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 2.0).z
+    //     );
 
         //Mix(es) of Curl Noise + simplex Noise
         vec3 simplexFlowField = vec3(
@@ -206,8 +206,8 @@ void main() {
         // repulsionDirection = normalize(repulsionDirection);
         flowField = normalize(flowField);
         
-        particle.xyz += flowField * uDeltaTime * ((strength * strength + uVelocity*10.0)/strength) * ((uFlowFieldStrength * uFlowFieldStrength + uVelocity* distFromParticle)/uFlowFieldStrength);
-        
+        particle.xyz += flowField * uDeltaTime * strength * ((uFlowFieldStrength * uFlowFieldStrength + uVelocity * distFromParticle)/uFlowFieldStrength);
+        // particle.xyz += uVelocity;
         
         
         
