@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import GUI from 'lil-gui'
 
 import Sizes from '../../utils/sizes.js'
 import Cursor from '../../utils/cursor.js'
@@ -44,10 +45,25 @@ class Experience {
             // /**
             //  * SCENE TWO --- Kind of works as a Hello World 
             //  */
-            this.LotusMesh = new LotusMesh()
+            // this.LotusMesh = new LotusMesh()
+            this.setupGUI() 
         })
 
+        
+
         this.time.on('tick', this.renderScene.bind(this))
+    }
+
+
+
+    setupGUI () {
+        this.gui = new GUI({ width: 340 })
+        
+        this.gui.add(this.lotusParticles.shaderMaterial.uniforms.uSize, 'value').min(0).max(1).step(0.001).name('uSize')
+        this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldInfluence, 'value').min(0).max(1).step(0.001).name('uFlowfieldInfluence')
+        this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldStrength, 'value').min(0).max(10).step(0.001).name('uFlowfieldStrength')
+        // gui.add(gpgpu.particlesVariable.material.uniforms.uFlowFieldStrength, 'value').min(0).max(10).step(0.001).name('uFlowfieldStrength')
+        this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldFrequency, 'value').min(0).max(1).step(0.001).name('uFlowfieldFrequency')
     }
 
     renderScene () {

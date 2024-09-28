@@ -169,7 +169,7 @@ void main() {
         //     repulsionDirection += normalize(dir) * f;
         // }
         
-        // //Flow Field Pure Simplex Noise
+        // // Flow Field Pure Simplex Noise
         // vec3 flowField = vec3(
         //     simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0, time)),
         //     simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity), time)),
@@ -179,7 +179,7 @@ void main() {
         // flowField += curl(flowField.x, flowField.y, flowField.z);
 
 
-        // //Pure Curl Noise
+        //Pure Curl Noise
         // vec3 flowField = curl(
         //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
         //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,

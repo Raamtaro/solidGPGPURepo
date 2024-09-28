@@ -4,10 +4,6 @@ import Experience from '../../experience/experience.js'
 
 import gpgpuShader from '../../../shaders/pointCloud/gpgpu/particles.glsl'
 
-const clamp = (number, min, max) => {
-    return Math.max(min, Math.min(number, max))
-}
-
 class GpgpuComputation {
     constructor(baseGeometry) { // Need to access the positions
         this.experience = new Experience()
@@ -81,11 +77,10 @@ class GpgpuComputation {
         this.particlesVariable.material.uniforms.uBase = new THREE.Uniform(this.baseParticlesTexture)
         this.particlesVariable.material.uniforms.uFlowFieldInfluence = new THREE.Uniform(0.974)
         this.particlesVariable.material.uniforms.uFlowFieldStrength = new THREE.Uniform(1.23)
-        this.particlesVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(0.88)
+        this.particlesVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(0.492)
         this.particlesVariable.material.uniforms.uVelocity = new THREE.Uniform(0.0)
         this.particlesVariable.material.uniforms.uMouse = new THREE.Uniform(new THREE.Vector2(-10.0, 10.0))
-        // this.particlesVariable.material.uniforms.uRepulsion = new THREE.Uniform(new THREE.Vector3())
-        // this.particlesVariable.material.uniforms.uBounds = new THREE.Uniform(this.instance.size)
+
     }
 
     update() {
@@ -104,46 +99,10 @@ class GpgpuComputation {
         this.particlesVariable.material.uniforms.uVelocity.value = Math.min(this.cursor.targetVelocity, 0.075)
         this.cursor.targetVelocity *= .9999999999
         // console.log(this.particlesVariable.material.uniforms.uMouse.value)
-        
-        // this.updateTexture()
+    
         this.instance.compute()
 
     }
-
-    // updateTexture () {
-    //     const data = this.baseParticlesTexture
-    //     const size = this.size
-
-    //     for (let i = 0; i < data.length; i+= 4) {
-    //         data[i] *= .97
-    //         data[i + 1] *= .97
-    //     }
-
-    //     const gridMouseX = size * this.cursor.followMouse.x
-    //     const gridMouseY = size * (1.0 - this.cursor.followMouse.y)
-
-    //     const maxDist = size * .41 //mouse radius
-    //     const aspect = this.sizes.height/this.sizes.width
-
-    //     for (let i = 0; i < size; i++) {
-    //         for (let j = 0; j < size; j++) {
-    //             const distance = ((gridMouseX - i)**2) / aspect + (gridMouseY - j) ** 2;
-    //             const maxDistSq = maxDist**2;
-
-    //             if (distance < maxDistSq) {
-    //                 let index = 4 * (i + size*j)
-    //                 let power = maxDist / Math.sqrt(distance)
-    //                 power = clamp(power, 0, 10)
-    //                 data[index] += .01 * 100 * this.cursor.targetVelocity * power;
-    //                 data[index+1] -= .01 * 100 * this.cursor.targetVelocity * power;
-    //             }
-    //         }
-    //     }
-
-    //     data.needsUpdate = true
-
-
-    // }
 }
 
 export default GpgpuComputation
