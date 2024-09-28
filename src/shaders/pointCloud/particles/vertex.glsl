@@ -3,6 +3,7 @@ uniform float uSize;
 uniform sampler2D uParticlesTexture;
 uniform vec3 uColor;
 uniform vec3 uLightColor;
+uniform vec3 uShadowColor;
 uniform vec2 uMouse;
 
 
@@ -47,7 +48,7 @@ void main()
     // float strength = floor(aParticlesUv.x * 10.0) / 10.0 * floor(aParticlesUv.y * 10.0) / 10.0;
     float strength = 1.0 - distance(aParticlesUv, vec2(0.5));
     vUv = uv;
-    vColor = mix(uColor, uLightColor, strength);
+    vColor = mix(uShadowColor, uColor, strength);
     vNormal = modelNormal;
     vPosition = modelPosition.xyz;
 
