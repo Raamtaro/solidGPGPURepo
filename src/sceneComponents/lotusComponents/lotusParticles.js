@@ -119,7 +119,7 @@ class LotusParticles {
         this.points.frustumCulled = false
 
         this.points.renderOrder = 0
-        this.scene.add(this.points)
+        // this.scene.add(this.points)
 
     }
 

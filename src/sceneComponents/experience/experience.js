@@ -31,7 +31,7 @@ class Experience {
         this.scenes = []
         this.renderables = []
 
-        this.scene = new THREE.Scene()
+        this.scene = new THREE.Scene() //Sample scene that I started out with
         this.resources = new Resources(sources)
 
         this.camera = new Camera()
@@ -56,7 +56,7 @@ class Experience {
 
         
 
-        this.time.on('tick', this.renderScene.bind(this))
+        // this.time.on('tick', this.renderScene.bind(this))
     }
 
     startup() {
@@ -67,6 +67,8 @@ class Experience {
          * 2. Set up Gui
          */
         this.createScenes()
+        this.setupGUI()
+        this.time.on('tick', this.renderScene.bind(this))
 
 
     }
@@ -77,6 +79,17 @@ class Experience {
 
         this.renderables.push(this.lotusParticles.points, this.lotusMesh.instance)
         console.log(this.renderables)
+
+        let i = 0
+        this.renderables.forEach(
+            (item) => {
+                this.scenes.push(new THREE.Scene())
+                this.scenes[i].add(item)
+                i++
+            }
+        )
+
+        console.log(this.scenes)
     }
 
     setupGUI () {
@@ -91,7 +104,7 @@ class Experience {
 
 
     renderScene () {
-        this.renderer.instance.render(this.scene, this.camera.instance)
+        this.renderer.instance.render(this.scenes[0], this.camera.instance)
     }
 }
 

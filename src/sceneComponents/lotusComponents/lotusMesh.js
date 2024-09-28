@@ -67,7 +67,7 @@ class LotusMesh {
                 this.instance.material = this.shaderMaterial
                 
 
-                this.scene.add(this.instance)
+                // this.scene.add(this.instance)
                 
                 // console.log(this.instance)
                 
