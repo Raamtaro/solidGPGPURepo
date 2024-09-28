@@ -38,25 +38,9 @@ class Experience {
         this.renderer = new Renderer()
         this.cursor = new Cursor()
 
-        // this.resources.on('ready', () => { //Going to condense this into the createScene method
-        //     // /**
-        //     //  * SCENE ONE PARTICLES
-        //     //  */
-
-        //     this.lotusParticles = new LotusParticles()
-
-        //     // /**
-        //     //  * SCENE TWO --- Kind of works as a Hello World 
-        //     //  */
-        //     // this.LotusMesh = new LotusMesh()
-        //     this.setupGUI() 
-        // })
-
         this.resources.on('ready', this.startup.bind(this))
 
-        
-
-        // this.time.on('tick', this.renderScene.bind(this))
+        // this.time.on('tick', this.renderScene.bind(this)) //Moved to the startup() function
     }
 
     startup() {
@@ -65,8 +49,10 @@ class Experience {
          * 
          * 1. Create Scenes
          * 2. Set up Gui
+         * 3. Start the scene here so that the render doesn't try to access properties of each object before it's defined
          */
         this.createScenes()
+        // this.compileScenes()
         this.setupGUI()
         this.time.on('tick', this.renderScene.bind(this))
 
@@ -83,13 +69,21 @@ class Experience {
         let i = 0
         this.renderables.forEach(
             (item) => {
-                this.scenes.push(new THREE.Scene())
-                this.scenes[i].add(item)
+                this.scenes.push({scene: new THREE.Scene()})
+                this.scenes[i].scene.add(item)
                 i++
             }
         )
 
         console.log(this.scenes)
+    }
+
+    compileScenes() {
+        this.scenes.forEach(
+            (obj, index) => {
+                this.renderer.instance.compile(obj.scene, this.camera.instance)
+            }
+        )
     }
 
     setupGUI () {
@@ -98,13 +92,12 @@ class Experience {
         this.gui.add(this.lotusParticles.shaderMaterial.uniforms.uSize, 'value').min(0).max(1).step(0.001).name('uSize')
         this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldInfluence, 'value').min(0).max(1).step(0.001).name('uFlowfieldInfluence')
         this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldStrength, 'value').min(0).max(10).step(0.001).name('uFlowfieldStrength')
-        // gui.add(gpgpu.particlesVariable.material.uniforms.uFlowFieldStrength, 'value').min(0).max(10).step(0.001).name('uFlowfieldStrength')
         this.gui.add(this.lotusParticles.gpgpu.particlesVariable.material.uniforms.uFlowFieldFrequency, 'value').min(0).max(1).step(0.001).name('uFlowfieldFrequency')
     }
 
 
     renderScene () {
-        this.renderer.instance.render(this.scenes[0], this.camera.instance)
+        this.renderer.instance.render(this.scenes[0].scene, this.camera.instance)
     }
 }
 
