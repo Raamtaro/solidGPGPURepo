@@ -9,6 +9,8 @@ import Camera from './camera.js'
 import Renderer from './renderer.js'
 import LotusParticles from '../lotusComponents/lotusParticles.js'
 import LotusMesh from '../lotusComponents/lotusMesh.js'
+import { WebGLRenderTarget } from 'three'
+import PostScene from './postScene.js'
 
 let instance = null
 
@@ -43,7 +45,7 @@ class Experience {
         // this.time.on('tick', this.renderScene.bind(this)) //Moved to the startup() function
     }
 
-    startup() {
+    startup() { //This method pretty much starts anything up which depends on the resources being defined.
         /**
          * On 'ready'
          * 
@@ -52,8 +54,14 @@ class Experience {
          * 3. Start the scene here so that the render doesn't try to access properties of each object before it's defined
          */
         this.createScenes()
-        // this.compileScenes()
+        this.compileScenes()
+        this.combineScenes()
         this.setupGUI()
+
+
+        /**
+         * Finally, render
+         */
         this.time.on('tick', this.renderScene.bind(this))
 
 
@@ -82,8 +90,24 @@ class Experience {
         this.scenes.forEach(
             (obj, index) => {
                 this.renderer.instance.compile(obj.scene, this.camera.instance)
+                obj.target = new WebGLRenderTarget(this.sizes.width, this.sizes.height)
+                console.log(obj.target)
             }
         )
+    }
+
+    combineScenes () {
+        this.postScene = new PostScene()
+
+        /**
+         * Important shortcuts
+         * 
+         * this.postScene.instance ---> Scene
+         * this.postScene.camera.instance ---> Camera
+         * this.postScene.quad ---> Shouldn't need this, but the quad
+         */
+
+
     }
 
     setupGUI () {
@@ -97,7 +121,8 @@ class Experience {
 
 
     renderScene () {
-        this.renderer.instance.render(this.scenes[0].scene, this.camera.instance)
+        // this.renderer.instance.render(this.scenes[0].scene, this.camera.instance) //Ground zero, this WILL render a scene barring any changes to the accessed objects
+        this.renderer.instance.render(this.postScene.instance, this.postScene.camera.instance)
     }
 }
 
