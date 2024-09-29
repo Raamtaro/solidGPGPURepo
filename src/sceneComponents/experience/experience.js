@@ -40,6 +40,8 @@ class Experience {
         this.renderer = new Renderer()
         this.cursor = new Cursor()
 
+        this.currentScene = 0; //Tell us which scene to load... for now?
+
         this.resources.on('ready', this.startup.bind(this))
 
         // this.time.on('tick', this.renderScene.bind(this)) //Moved to the startup() function
@@ -58,7 +60,7 @@ class Experience {
         this.combineScenes()
         this.setupGUI()
 
-
+        // console.log(this.scenes[this.currentScene])
         /**
          * Finally, render
          */
@@ -96,7 +98,7 @@ class Experience {
         )
     }
 
-    combineScenes () {
+    combineScenes () { //This function probably isn't necessary, I can just go ahead and define it... up top, honestly.
         this.postScene = new PostScene()
 
         /**
@@ -121,6 +123,28 @@ class Experience {
 
 
     renderScene () {
+
+        //Render Current
+        this.renderer.instance.setRenderTarget(this.scenes[this.currentScene].target)
+        this.renderer.instance.render(this.scenes[this.currentScene].scene, this.camera.instance)
+
+        this.next = this.currentScene + 1
+
+        //Render Next
+        this.renderer.instance.setRenderTarget(this.scenes[this.next].target)
+        this.renderer.instance.render(this.scenes[this.next].scene, this.camera.instance)
+
+        //CleanUp
+        this.renderer.instance.setRenderTarget(null)
+
+        //Set Post's uniforms
+        this.postScene.material.uniforms.uTexture1.value = this.scenes[this.currentScene].target.texture
+        this.postScene.material.uniforms.uTexture2.value = this.scenes[this.next].target.texture
+
+
+
+
+
         // this.renderer.instance.render(this.scenes[0].scene, this.camera.instance) //Ground zero, this WILL render a scene barring any changes to the accessed objects
         this.renderer.instance.render(this.postScene.instance, this.postScene.camera.instance)
     }

@@ -44,7 +44,7 @@ class LotusParticles {
         }
 
         this.uniforms = {
-            uSize: new THREE.Uniform(0.03699),
+            uSize: new THREE.Uniform(0.01699),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
             uParticlesTexture: new THREE.Uniform(),
             uColor: new THREE.Uniform(new THREE.Color(this.materialParams.color)),
