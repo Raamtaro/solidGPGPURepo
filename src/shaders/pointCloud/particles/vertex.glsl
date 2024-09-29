@@ -47,10 +47,10 @@ void main()
     // Varyings
 
     // float strength = floor(aParticlesUv.x * 10.0) / 10.0 * floor(aParticlesUv.y * 10.0) / 10.0;
-    // float strength = 1.0 - distance(aParticlesUv, vec2(0.5));
-    float angle = atan(aParticlesUv.x - 0.5, aParticlesUv.y - 0.5)/65.0;
+    float strength = 1.0 - distance(aParticlesUv, vec2(0.5));
+    // float angle = atan(aParticlesUv.x - 0.5, aParticlesUv.y - 0.5)/65.0;
     // angle /= (M_PI * 20.0);
-    float strength = mod(angle * 20.0, 1.0);
+    // float strength = mod(angle * 20.0, 1.0);
     vUv = uv;
     // vColor = mix(uShadowColor, uColor, strength);
     vColor = mix(mix(uColor, particle.zxy, strength), uShadowColor, strength);

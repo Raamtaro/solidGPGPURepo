@@ -179,27 +179,27 @@ void main() {
         // flowField += curl(flowField.x, flowField.y, flowField.z);
 
 
-    //    // Pure Curl Noise
-    //     vec3 flowField = curl(
-    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
-    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,
-    //         (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 2.0).z
-    //     );
-
-        //Mix(es) of Curl Noise + simplex Noise
-        vec3 simplexFlowField = vec3(
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0, time)),
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity), time)),
-            simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency  +  2.0, time))
-        );
-        
-        vec3 curlFlowField = curl(
+       // Pure Curl Noise
+        vec3 flowField = curl(
             (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
             (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,
             (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 2.0).z
         );
 
-        vec3 flowField = cross(simplexFlowField, curlFlowField);
+        // //Mix(es) of Curl Noise + simplex Noise
+        // vec3 simplexFlowField = vec3(
+        //     simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0, time)),
+        //     simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity), time)),
+        //     simplexNoise4d(vec4(particle.xyz * uFlowFieldFrequency  +  2.0, time))
+        // );
+        
+        // vec3 curlFlowField = curl(
+        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 0.0).x,
+        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + (1.0 + uVelocity)).y,
+        //     (particle.xyz * uFlowFieldFrequency + uVelocity*10.0 + 2.0).z
+        // );
+
+        // vec3 flowField = cross(simplexFlowField, curlFlowField);
         // vec3 flowField = cross(curlFlowField, simplexFlowField);
 
 
@@ -212,7 +212,11 @@ void main() {
         
         
         particle.a += uDeltaTime * 0.3;
+
     }
 
     gl_FragColor = particle;
+
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
 }
