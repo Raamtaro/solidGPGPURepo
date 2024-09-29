@@ -23,6 +23,7 @@ class PostScene { //Not going to bother creating a camera class for postScene. T
         //Quad Material
         this.uniforms = {
             // uParticleSceneTexture: new THREE.Uniform(this.loader.load(polarBearTexture)), //Hello world
+            uProgress: new THREE.Uniform(0.0),
             uTexture1: new THREE.Uniform(null),
             uTexture2: new THREE.Uniform(null),
         }
