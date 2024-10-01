@@ -44,7 +44,7 @@ void main()
     vec4 firstTexture = texture2D(uTexture1, newUv); //Hover 
     vec4 secondTexture = texture2D(uTexture2, newUv); //Cover
 
-    vec4 finalImage = mix(secondTexture,firstTexture, finalMask);
+    vec4 finalImage = mix(secondTexture, 1.0 - firstTexture, finalMask);
 
     // gl_FragColor = secondTexture;
     gl_FragColor = vec4(vec3(finalImage), 1.0);

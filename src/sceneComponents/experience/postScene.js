@@ -31,7 +31,7 @@ class PostScene { //Not going to bother creating a camera class for postScene. T
             uTexture1: new THREE.Uniform(null),
             uTexture2: new THREE.Uniform(null),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
-            uRadius: new THREE.Uniform(0.12),
+            uRadius: new THREE.Uniform(0.09),
         }
 
         this.material = new THREE.ShaderMaterial(
