@@ -92,9 +92,6 @@ class LotusMesh {
 
     update() {
         const elapsedTime = this.time.elapsed / 1000
-        // this.instance.rotation.x = elapsedTime * 0.2
-        this.instance.rotation.y = elapsedTime * 0.12
-        // this.instance.rotation.z = - elapsedTime * 0.12
         this.instance.material.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
 
         

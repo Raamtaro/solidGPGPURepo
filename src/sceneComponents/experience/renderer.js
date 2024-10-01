@@ -22,7 +22,7 @@ class Renderer {
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
 
-        this.instance.setClearColor('#001a1a')
+        this.instance.setClearColor('#00e6e6')
         // this.instance.setClearAlpha(0)
         
     }
