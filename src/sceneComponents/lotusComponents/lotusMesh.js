@@ -90,15 +90,6 @@ class LotusMesh {
         this.instance.material.uniforms.uResolution.value.set(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)
     }
 
-    handleIntersect() {
-        const intersects = this.raycaster.intersectObjects(this.scene.children)
-
-        this.raycaster.setFromCamera(this.cursor.ndcFollowMouse, this.camera.instance)
-        for (let i = 0; i < intersects.length; i++) {
-            console.log(intersects[i])
-        }
-    }
-
     update() {
         const elapsedTime = this.time.elapsed / 1000
         // this.instance.rotation.x = elapsedTime * 0.2
@@ -106,7 +97,7 @@ class LotusMesh {
         // this.instance.rotation.z = - elapsedTime * 0.12
         this.instance.material.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
 
-        this.handleIntersect()
+        
         
         
     }
