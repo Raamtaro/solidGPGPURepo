@@ -77,7 +77,7 @@ class GpgpuComputation {
         this.particlesVariable.material.uniforms.uBase = new THREE.Uniform(this.baseParticlesTexture)
         this.particlesVariable.material.uniforms.uFlowFieldInfluence = new THREE.Uniform(0.974)
         this.particlesVariable.material.uniforms.uFlowFieldStrength = new THREE.Uniform(1.23)
-        this.particlesVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(0.492)
+        this.particlesVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(0.792)
         this.particlesVariable.material.uniforms.uVelocity = new THREE.Uniform(0.0)
         this.particlesVariable.material.uniforms.uMouse = new THREE.Uniform(new THREE.Vector2(-10.0, 10.0))
 

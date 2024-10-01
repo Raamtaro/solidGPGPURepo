@@ -26,18 +26,26 @@ class PostScene { //Not going to bother creating a camera class for postScene. T
             // uParticleSceneTexture: new THREE.Uniform(this.loader.load(polarBearTexture)), //Hello world
             uTime: new THREE.Uniform(0.0),
             uMouse: new THREE.Uniform(new THREE.Vector2(10, -10)),
-            uProgress: new THREE.Uniform(0.0),
+            uTransitionProgress: new THREE.Uniform(0.0),
+            uHoverProgress: new THREE.Uniform(0.0),
             uTexture1: new THREE.Uniform(null),
             uTexture2: new THREE.Uniform(null),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
+            uRadius: new THREE.Uniform(0.12),
         }
+
         this.material = new THREE.ShaderMaterial(
             {
                 uniforms: this.uniforms,
                 vertexShader: VertexShader,
-                fragmentShader: FragmentShader
+                fragmentShader: FragmentShader,
+                defines: {
+                    PI: Math.PI,
+                    PR: window.devicePixelRatio.toFixed(1),
+                }
             }
         )
+
         this.setupQuad() //this.quad now accessible
         this.sizes.on('resize', this.resizeUpdate.bind(this))
         this.time.on('tick', this.updateUniforms.bind(this))

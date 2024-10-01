@@ -5,31 +5,49 @@ uniform sampler2D uTexture1;
 uniform sampler2D uTexture2;
 
 uniform vec2 uMouse;
+uniform float uTime;
+uniform float uRadius;
 
-float circle(vec2 uv, vec2 disc_center, float disc_radius, float border_size) {
-    uv -= disc_center;
-    uv*=uResolution;
-    float dist = sqrt(dot(uv, uv));
-    return smoothstep(disc_radius+border_size, disc_radius-border_size, dist);
+#define TWO_PI 6.28318530718
+#include ./includes/simplexNoise3d.glsl;
+
+float circle(in vec2 _st, in float _radius, in float blurriness){
+	vec2 dist = _st;
+	return 1.-smoothstep(_radius-(_radius*blurriness), _radius+(_radius*blurriness), dot(dist,dist)*4.0);
 }
 
 void main()
-{
-    // float strength = floor(vUv.x * 10.0) / 10.0 * floor(vUv.y * 10.0) / 10.0;
-
+{   vec2 res = uResolution * PR;
+    vec2 st = gl_FragCoord.xy/uResolution.xy;
     vec2 newUv = vUv;
 
-    float c = circle(vUv, uMouse, 0.1, 0.2);
-    
-    // vec2 gridUv = floor(vUv * 512.0) / 512.0;
-    vec4 firstTexture = texture2D(uTexture1, vUv);
-    vec4 secondTexture = texture2D(uTexture2, vUv);
+    st.y *= uResolution.y / uResolution.x;
 
-    // gl_FragColor = vec4(gridUv, 1.0, 1.0);
+    vec2 mouse = uMouse;
+    mouse.y *= uResolution.y/uResolution.x;
+    mouse *= -1.0;
+    vec2 circlePos = st + mouse;
 
-    // vec4 color = mix(firstTexture, secondTexture, c);
+    float c = circle(circlePos, uRadius, 2.) * 2.5;
 
-    gl_FragColor = firstTexture;
+    //noise 
+    float offX = newUv.x + sin(newUv.y + uTime * .1);
+    float offY = newUv.y - uTime * 0.1 - cos(uTime * .001) * .01;
+
+
+    float n = snoise(vec3(offX, offY, uTime * .1)*8.0) - 1.;
+
+    //Final Mask
+    float finalMask = smoothstep(0.475, .5, n + pow(c, 2.));
+
+    //final image
+    vec4 firstTexture = texture2D(uTexture1, newUv); //Hover 
+    vec4 secondTexture = texture2D(uTexture2, newUv); //Cover
+
+    vec4 finalImage = mix(secondTexture, firstTexture, finalMask);
+
+    // gl_FragColor = secondTexture;
+    gl_FragColor = vec4(vec3(finalImage), 1.0);
 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>

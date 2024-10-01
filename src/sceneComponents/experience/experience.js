@@ -125,21 +125,19 @@ class Experience {
     renderScene () {
 
         //Render Current
-        this.renderer.instance.setRenderTarget(this.scenes[this.currentScene].target)
-        this.renderer.instance.render(this.scenes[this.currentScene].scene, this.camera.instance)
-
-        this.next = this.currentScene + 1
+        this.renderer.instance.setRenderTarget(this.scenes[0].target)
+        this.renderer.instance.render(this.scenes[0].scene, this.camera.instance)
 
         //Render Next
-        this.renderer.instance.setRenderTarget(this.scenes[this.next].target)
-        this.renderer.instance.render(this.scenes[this.next].scene, this.camera.instance)
+        this.renderer.instance.setRenderTarget(this.scenes[1].target)
+        this.renderer.instance.render(this.scenes[1].scene, this.camera.instance)
 
         //CleanUp
         this.renderer.instance.setRenderTarget(null)
 
         //Set Post's uniforms
-        this.postScene.material.uniforms.uTexture1.value = this.scenes[this.currentScene].target.texture
-        this.postScene.material.uniforms.uTexture2.value = this.scenes[this.next].target.texture
+        this.postScene.material.uniforms.uTexture1.value = this.scenes[0].target.texture
+        this.postScene.material.uniforms.uTexture2.value = this.scenes[1].target.texture
 
 
 

@@ -41,7 +41,7 @@ void main()
     float sizeOut = smoothstep(0.7, 1.0, particle.a);
     float size = min(sizeIn, sizeOut);
 
-    gl_PointSize = aSize * uSize * uResolution.y;
+    gl_PointSize = uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     // Varyings
@@ -52,6 +52,7 @@ void main()
     // angle /= (M_PI * 20.0);
     // float strength = mod(angle * 20.0, 1.0);
     vUv = uv;
+    vColor = vec3(1.0);
     // vColor = mix(uShadowColor, uColor, strength);
     vColor = mix(mix(uColor, particle.zxy, strength), uShadowColor, strength);
     vNormal = modelNormal;

@@ -10,10 +10,21 @@ class LotusMesh {
         this.scene = this.experience.scene
         this.time = this.experience.time
         this.cursor = this.experience.cursor
-        
+        this.sizes = this.experience.sizes
+        this.camera = this.experience.camera
+
+
+        console.log(this.scene)
+
         
 
-        this.sizes = this.experience.sizes
+        /**
+         * The RAYCASTER
+         */
+
+        this.raycaster = new THREE.Raycaster() //Use with this.cursor.ndc... 
+
+
 
         /**
          * Set up the material
@@ -79,12 +90,23 @@ class LotusMesh {
         this.instance.material.uniforms.uResolution.value.set(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)
     }
 
+    handleIntersect() {
+        const intersects = this.raycaster.intersectObjects(this.scene.children)
+
+        this.raycaster.setFromCamera(this.cursor.ndcFollowMouse, this.camera.instance)
+        for (let i = 0; i < intersects.length; i++) {
+            console.log(intersects[i])
+        }
+    }
+
     update() {
         const elapsedTime = this.time.elapsed / 1000
         // this.instance.rotation.x = elapsedTime * 0.2
         this.instance.rotation.y = elapsedTime * 0.12
         // this.instance.rotation.z = - elapsedTime * 0.12
         this.instance.material.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
+
+        this.handleIntersect()
         
         
     }
