@@ -109,8 +109,15 @@ class Experience {
         this.scenes.forEach(
             (obj, index) => {
                 this.renderer.instance.compile(obj.scene, this.camera.instance)
-                obj.target = new WebGLRenderTarget(this.sizes.width, this.sizes.height)
+                obj.target = new WebGLRenderTarget(this.sizes.width, this.sizes.height, {
+                    format: THREE.RGBAFormat,
+                    type: THREE.UnsignedByteType,
+                    samples: 4
+                })
+                // obj.target.texture.minFilter = THREE.LinearFilter;
+                // obj.target.texture.magFilter = THREE.LinearFilter;
                 obj.target.texture.generateMipmaps = false
+                
                 // console.log(obj.target)
             }
         )
@@ -118,7 +125,11 @@ class Experience {
 
     onResize() {
         //Need to resize the renderTargets as well
-        
+        this.scenes.forEach(
+            (obj, index) => {
+                obj.target.setSize(this.sizes.width, this.sizes.height)
+            }
+        )
 
     }
 

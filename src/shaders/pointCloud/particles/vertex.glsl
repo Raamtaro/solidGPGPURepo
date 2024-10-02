@@ -57,6 +57,7 @@ void main()
     vColor = mix(mix(uColor, particle.xyz, strength), uShadowColor, strength);
     // vColor = mix(uShadowColor, uLightColor, strength);
     // vColor = mix(vColor, uColor, strength);
+    // vColor = uColor;
     vNormal = modelNormal;
     vPosition = modelPosition.xyz;
 

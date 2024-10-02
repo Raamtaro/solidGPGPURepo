@@ -1,3 +1,5 @@
+precision highp float;
+
 uniform vec3 uColor;
 uniform vec2 uResolution;
 uniform float uShadowRepetitions;

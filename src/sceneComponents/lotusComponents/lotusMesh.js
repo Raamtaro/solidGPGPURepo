@@ -39,9 +39,9 @@ class LotusMesh {
         this.uniforms = { 
             uColor: new THREE.Uniform(new THREE.Color(this.materialParams.color)),
             uResolution: new THREE.Uniform(new THREE.Vector2(this.sizes.width * this.sizes.pixelRatio, this.sizes.height * this.sizes.pixelRatio)),
-            uShadowRepetitions: new THREE.Uniform(256),
+            uShadowRepetitions: new THREE.Uniform(1024),
             uShadowColor: new THREE.Uniform(new THREE.Color(this.materialParams.shadowColor)),
-            uLightRepetitions: new THREE.Uniform(256),
+            uLightRepetitions: new THREE.Uniform(1024),
             uLightColor: new THREE.Uniform(new THREE.Color(this.materialParams.lightColor)),
             uMouse: new THREE.Uniform(new THREE.Vector2()),
             uAlpha: new THREE.Uniform(0.0)
