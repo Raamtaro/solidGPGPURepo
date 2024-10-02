@@ -130,8 +130,6 @@ class LotusParticles {
     update() {
         const deltaTime = this.time.delta / 1000
         
-        // this.points.rotateOnAxis(new THREE.Vector3(0, 1, 0), deltaTime*0.12)
-        
         this.shaderMaterial.uniforms.uParticlesTexture.value = this.gpgpu.instance.getCurrentRenderTarget(this.gpgpu.particlesVariable).texture
         this.shaderMaterial.uniforms.uMouse.value.set(this.cursor.ndcFollowMouse) 
     }

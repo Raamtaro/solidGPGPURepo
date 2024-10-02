@@ -54,7 +54,7 @@ void main()
     vUv = uv;
     vColor = vec3(0.0);
     // vColor = mix(uShadowColor, uColor, strength);
-    // vColor = mix(mix(uColor, particle.xyz, strength), uShadowColor, strength);
+    vColor = mix(mix(uColor, particle.xyz, strength), uShadowColor, strength);
     // vColor = mix(uShadowColor, uLightColor, strength);
     // vColor = mix(vColor, uColor, strength);
     vNormal = modelNormal;

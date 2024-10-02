@@ -2,10 +2,12 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 import * as THREE from 'three'
 import EventEmitter from './eventEmitter.js'
+import Experience from '../sceneComponents/experience/experience.js'
 
 class Resources extends EventEmitter { //For now this will just be a GLTF Loader, edit it to work in texture loading 
     constructor(sources) {
         super()
+        this.experience = new Experience()
         this.sources = sources
 
         this.items = {}
@@ -23,7 +25,7 @@ class Resources extends EventEmitter { //For now this will just be a GLTF Loader
         this.loaders.dracoLoader = new DRACOLoader()
         this.loaders.dracoLoader.setDecoderPath('/draco/')
 
-        this.loaders.gltfLoader = new GLTFLoader()
+        this.loaders.gltfLoader = new GLTFLoader(this.experience.loadingScreen.loadingManager)
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
         
         this.loaders.textureLoader = new THREE.TextureLoader()
@@ -44,7 +46,7 @@ class Resources extends EventEmitter { //For now this will just be a GLTF Loader
         let loader;
         let file;
 
-        console.log('Intialising loader...')
+        // console.log('Intialising loader...')
 
         switch(source.type) {
             case 'gltfModel':
@@ -59,7 +61,7 @@ class Resources extends EventEmitter { //For now this will just be a GLTF Loader
                 console.warn(`unknown resource type: ${sources.type}`)
         }
 
-        console.log('loading resource...')
+        // console.log('loading resource...')
 
         try {
             file = await loader.loadAsync(source.path)
@@ -67,14 +69,14 @@ class Resources extends EventEmitter { //For now this will just be a GLTF Loader
         } catch (error) {
             console.error(`Error loading ${source.name}:`, error)
         }  finally {
-            console.log('done')
+            // console.log('done')
         }
     }
 
     sourceLoaded (source, file) {
         this.items[source.name] = file
         this.loaded++
-        console.log(file)
+        // console.log(file)
     }
     
 }

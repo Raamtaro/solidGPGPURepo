@@ -5,4 +5,4 @@ import Sketch from './app.js'
 
 const webGLInstance = new Sketch()
 
-console.log(webGLInstance)
+// console.log(webGLInstance)

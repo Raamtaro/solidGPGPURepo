@@ -7,7 +7,7 @@ class Sketch {
     constructor() {
 
         this.experience = new Experience(sources, document.querySelector('canvas.webgl'))
-        console.log(this.experience)
+        // console.log(this.experience)
     }
 }
 

@@ -26,7 +26,7 @@ class Cursor extends EventEmitter {
         this.ndcMouse = new THREE.Vector2()
         this.ndcFollowMouse = new THREE.Vector2()
         this.ndcPreviousMouse = new THREE.Vector2()
-        this.ease = 0.075
+        this.ease = 0.06
 
         this.velocity = 0
         this.targetVelocity = 0
@@ -78,8 +78,8 @@ class Cursor extends EventEmitter {
 
     determineParallax() {
         const parallaxCoords = this.parallaxCoords
-        const parallaxX = parallaxCoords.x * 0.3
-        const parallaxY = - parallaxCoords.y * 0.3
+        const parallaxX = parallaxCoords.x * 0.9
+        const parallaxY = - parallaxCoords.y * 0.9
 
         this.cameraGroup.position.x += (parallaxX - this.cameraGroup.position.x) * 5 * this.deltaTime
         this.cameraGroup.position.y += (parallaxY - this.cameraGroup.position.y) * 5 * this.deltaTime

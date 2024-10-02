@@ -10,7 +10,11 @@ import Renderer from './renderer.js'
 import LotusParticles from '../lotusComponents/lotusParticles.js'
 import LotusMesh from '../lotusComponents/lotusMesh.js'
 import { WebGLRenderTarget } from 'three'
+
+//Final Composition
+import LoadingScreen from './loading.js'
 import PostScene from './postScene.js'
+
 
 let instance = null
 
@@ -27,22 +31,32 @@ class Experience {
         window.experience = this
         this.canvas = canvas
 
+
+
         this.sizes = new Sizes()
         this.time = new Time()
 
         this.scenes = []
         this.renderables = []
 
-        this.scene = new THREE.Scene() //Sample scene that I started out with
-        this.resources = new Resources(sources)
+        
+          
+        
+
+        this.scene = new THREE.Scene() //Sample scene that I started out with. I need to go back and comment this out of everything it's included in, and then comment this out (and eventually delete after next commit)
+        
 
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.cursor = new Cursor()
 
+        this.postScene = new PostScene()
+        this.loadingScreen = new LoadingScreen()
+        this.resources = new Resources(sources)
         this.currentScene = 0; //Tell us which scene to load... for now?
 
         this.resources.on('ready', this.startup.bind(this))
+        this.sizes.on('resize', this.onResize.bind(this))
 
         // this.time.on('tick', this.renderScene.bind(this)) //Moved to the startup() function
     }
@@ -55,9 +69,11 @@ class Experience {
          * 2. Set up Gui
          * 3. Start the scene here so that the render doesn't try to access properties of each object before it's defined
          */
+        
+        
         this.createScenes()
         this.compileScenes()
-        this.combineScenes()
+        // this.combineScenes()
         this.setupGUI()
 
         // console.log(this.scenes[this.currentScene])
@@ -74,18 +90,19 @@ class Experience {
         this.lotusMesh = new LotusMesh()
 
         this.renderables.push(this.lotusParticles.points, this.lotusMesh.instance)
-        console.log(this.renderables)
+        // console.log(this.renderables)
 
         let i = 0
         this.renderables.forEach(
             (item) => {
                 this.scenes.push({scene: new THREE.Scene()})
                 this.scenes[i].scene.add(item)
+                this.scenes[i].scene.add(this.camera.cameraGroup)
                 i++
             }
         )
 
-        console.log(this.scenes)
+        // console.log(this.scenes)
     }
 
     compileScenes() {
@@ -93,24 +110,21 @@ class Experience {
             (obj, index) => {
                 this.renderer.instance.compile(obj.scene, this.camera.instance)
                 obj.target = new WebGLRenderTarget(this.sizes.width, this.sizes.height)
-                console.log(obj.target)
+                obj.target.texture.generateMipmaps = false
+                // console.log(obj.target)
             }
         )
     }
 
-    combineScenes () { //This function probably isn't necessary, I can just go ahead and define it... up top, honestly.
-        this.postScene = new PostScene()
-
-        /**
-         * Important shortcuts
-         * 
-         * this.postScene.instance ---> Scene
-         * this.postScene.camera.instance ---> Camera
-         * this.postScene.quad ---> Shouldn't need this, but the quad
-         */
-
+    onResize() {
+        //Need to resize the renderTargets as well
+        
 
     }
+
+    // combineScenes () { //This function probably isn't necessary, I can just go ahead and define it... up top, honestly.
+    //     this.postScene = new PostScene()
+    // }
 
     setupGUI () {
         this.gui = new GUI({ width: 340 })
