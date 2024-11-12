@@ -26,8 +26,11 @@ class Cursor extends EventEmitter {
         this.ndcMouse = new THREE.Vector2()
         this.ndcFollowMouse = new THREE.Vector2()
         this.ndcPreviousMouse = new THREE.Vector2()
+
+        //Ease Factor for things like trailing 
         this.ease = 0.06
 
+        //Velocity of the mouse for shader effects and the like.
         this.velocity = 0
         this.targetVelocity = 0
 

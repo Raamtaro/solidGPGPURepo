@@ -1,5 +1,3 @@
-
-
 vec3 random3(vec3 c) {
     float j = 4096.0*sin(dot(c,vec3(17.0, 59.4, 15.0)));
     vec3 r;
