@@ -102,7 +102,7 @@ class Experience {
             }
         )
 
-        // console.log(this.scenes)
+        console.log(this.scenes) //Why does this output a target key at this point, even though it hasn't been added?
     }
 
     compileScenes() {
@@ -110,9 +110,9 @@ class Experience {
             (obj, index) => {
                 this.renderer.instance.compile(obj.scene, this.camera.instance)
                 obj.target = new WebGLRenderTarget(this.sizes.width, this.sizes.height, {
-                    format: THREE.RGBAFormat,
-                    type: THREE.UnsignedByteType,
-                    samples: 4
+                    // format: THREE.RGBAFormat,
+                    type: THREE.Float,
+                    // samples: 4
                 })
                 // obj.target.texture.minFilter = THREE.LinearFilter;
                 // obj.target.texture.magFilter = THREE.LinearFilter;
